@@ -1,0 +1,28 @@
+.perm-container {
+    margin-top: 50px;
+}
+
+.override-color {
+    background-color: #e88a8a;
+}
+
+.overridden-font {
+    text-decoration: line-through;
+}
+
+.perm-weight-input {
+    width: 50%;
+    text-align: center;
+    float: left;
+}
+
+.perm {
+    width: 21%;
+    float: left;
+    padding-right: 10px;
+}
+
+#btn-view-results {
+    float: right;
+    margin-top: 53px;
+}

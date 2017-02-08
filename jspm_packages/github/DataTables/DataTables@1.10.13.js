@@ -1,0 +1,1 @@
+module.exports = require("github:DataTables/DataTables@1.10.13/js/jquery.dataTables");

@@ -1,0 +1,1 @@
+module.exports = require("npm:numeral@2.0.4/numeral.js");

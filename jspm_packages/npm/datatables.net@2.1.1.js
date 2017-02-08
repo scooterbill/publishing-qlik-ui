@@ -1,0 +1,1 @@
+module.exports = require("npm:datatables.net@2.1.1/js/jquery.dataTables.js");

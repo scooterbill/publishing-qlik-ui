@@ -1,0 +1,7 @@
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/anon.js:2:5: Unexpected token <
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/anon.js:2:5: Invalid left-hand side expression in assignment
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/anon.js:2:18: Unexpected token >
+
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/types.js:17:5: Unexpected token <
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/types.js:17:5: Invalid left-hand side expression in assignment
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/numeral@2.0.4/templates/types.js:17:18: Unexpected token >
