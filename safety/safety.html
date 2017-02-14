@@ -1,113 +1,158 @@
 <template>
-    <require from="/value-converters/decimal-format"></require>
+    <require from="/value-converters/decimal-formats"></require>
     <compose view="./save-weights-modal.html"></compose>
+    <compose view="./consequence-weighting-modal.html"></compose>
+    <compose view="./mean-severity-weighting-modal.html"></compose>
 
-    <div class="row perm-container">
-        <div class="col-xs-8 col-xs-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Permutation Selector
+    <div class="container-fluid">
+        <div class="row perm-container">
+            <div class="col-xs-10">
+                <div class="panel panel-default perm-panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            Mission Profile Selector
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="perm">
+                            <label class="control-label">MDS</label>
+                            <select class="form-control select2" id="mds" value.bind="selectedMDS">
+                            <option model.bind="null">Choose...</option>
+                            <option repeat.for="MDS of MDSWeightings" model.bind="MDS">
+                                ${MDS.AircraftMDS} - ${MDS.MDSWeighting}
+                                </option>
+                      </select>
+                            <input type="number" class="perm-weight-input ${mdsWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="selectedMDS.MDSWeighting | weight"
+                                data-toggle="tooltip" data-placement="bottom" title="MDS Weight">
+                            <input type="number" class="${((mdsWeightOverride != '') && (selectedMDS.MDSWeighting != mdsWeightOverride)) ? 'override-color': ''} perm-weight-input"
+                                value.bind="mdsWeightOverride | weight & updateTrigger:'blur'" data-toggle="tooltip" data-placement="bottom"
+                                title="Override MDS Weight" placeholder="override">
+                        </div>
+                        <div class="perm">
+                            <label class="control-label">Mission Type</label>
+                            <select class="form-control select2" id="missiontype" value.bind="selectedMissionType">
+                            <option model.bind="null">Choose...</option>
+                            <option repeat.for="m of MissionTypeWeightings" model.bind="m">
+                                ${m.MissionType} - ${m.MissionTypeWeighting}
+                                </option>
+                      </select>
+                            <input type="number" class="perm-weight-input ${missionTypeWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="selectedMissionType.MissionTypeWeighting | weight"
+                                data-toggle="tooltip" data-placement="bottom" title="Mission Type Weight">
+                            <input type="number" class="${((missionTypeWeightOverride != '') && (selectedMissionType.MissionTypeWeighting != missionTypeWeightOverride)) ? 'override-color': ''} perm-weight-input"
+                                value.bind="missionTypeWeightOverride | weight & updateTrigger:'blur'" data-toggle="tooltip"
+                                data-placement="bottom" title="Override Mission Type Weight" placeholder="override">
+                        </div>
+                        <div class="perm">
+                            <label class="control-label">Mission Role</label>
+                            <select class="form-control select2" id="missionrole" value.bind="selectedMissionRole">
+                            <option model.bind="null">Choose...</option>
+                            <option repeat.for="m of MissionRoleWeightings" model.bind="m">
+                                ${m.MissionRole} - ${m.MissionRoleWeighting}
+                                </option>
+                      </select>
+                            <input type="number" class="perm-weight-input ${missionRoleWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="selectedMissionRole.MissionRoleWeighting | weight"
+                                data-toggle="tooltip" data-placement="bottom" title="Mission Role Weight">
+                            <input type="number" class="${((missionRoleWeightOverride != '') && (selectedMissionRole.MissionRoleWeighting != missionRoleWeightOverride)) ? 'override-color': ''} perm-weight-input"
+                                value.bind="missionRoleWeightOverride | weight & updateTrigger:'blur'" data-toggle="tooltip"
+                                data-placement="bottom" title="Override Mission Role Weight" placeholder="override">
+                        </div>
+                        <div class="perm">
+                            <label class="control-label">Flight Conditions</label>
+                            <select class="form-control select2" id="flightcondition" value.bind="selectedFlightCondition">
+                            <option model.bind="null">Choose...</option>
+                            <option repeat.for="f of FlightConditionWeightings" model.bind="f">
+                                ${f.FlightCondition} - ${f.FlightConditionWeighting}
+                                </option>
+                      </select>
+                            <input type="number" class="perm-weight-input ${flightConditionsWeightOverride != '' ? 'overridden-font' : ''}" disabled
+                                value.bind="selectedFlightCondition.FlightConditionWeighting | weight" data-toggle="tooltip"
+                                data-placement="bottom" title="Flight Conditions Weight">
+                            <input type="number" class="${((flightConditionsWeightOverride != '') && (selectedFlightCondition.FlightConditionWeighting != flightConditionsWeightOverride)) ? 'override-color': ''} perm-weight-input"
+                                value.bind="flightConditionsWeightOverride | weight & updateTrigger:'blur'" data-toggle="tooltip"
+                                data-placement="bottom" title="Override Flight Conditions Weight" placeholder="override">
+                        </div>
+                        <div class="perm">
+                            <button id="view-results-btn" click.trigger="getScenarioResults(selectedMDS, selectedMissionType, selectedMissionRole, selectedFlightCondition)"
+                                class="btn btn-primary">View Results</button>
+                            <button id="save-perm-btn" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="perm">
-                        <label class="control-label">MDS</label>
-                        <select class="form-control" id="mds">
-                        <option>AH-64D</option>
-                        <option>AH-ROFL</option>
-                      </select>
-                        <input type="number" class="perm-weight-input ${mdsWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="mdsWeight | twoDecimalFormat" data-toggle="tooltip" data-placement="bottom"
-                            title="MDS Weight">
-                        <input type="number" class="${((mdsWeightOverride != '') && (mdsWeight != mdsWeightOverride)) ? 'override-color': ''} perm-weight-input"
-                            value.bind="mdsWeightOverride | twoDecimalFormat & updateTrigger:'blur'" data-toggle="tooltip" data-placement="bottom"
-                            title="Override MDS Weight">
+            </div>
+            <div class="col-xs-2">
+                <div class="panel panel-default perm-panel">
+                    <div class="panel-heading">
+                        Severity of Consequences
                     </div>
-                    <div class="perm">
-                        <label class="control-label">Mission Type</label>
-                        <select class="form-control" id="missionType">
-                        <option>Imminent Danger</option>
-                        <option>Other Danger</option>
-                        <option>No Danger</option>
+                    <div class="panel-body">
+                        <div>
+                            <select class="form-control select2" id="severityOfConsequences" value.bind="selectedSeverityOfConsequences">
+                            <option model.bind="null">Choose...</option>
+                            <option repeat.for="s of SOCWeightings" model.bind="s">
+                                ${s.SeverityOfConsequence} - ${s.SevOfConWeighting}
+                                </option>
                       </select>
-                        <input type="number" class="perm-weight-input ${missionTypeWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="missionTypeWeight | twoDecimalFormat" data-toggle="tooltip"
-                            data-placement="bottom" title="Mission Type Weight">
-                        <input type="number" class="${((missionTypeWeightOverride != '') && (missionTypeWeight != missionTypeWeightOverride)) ? 'override-color': ''} perm-weight-input"
-                            value.bind="missionTypeWeightOverride | twoDecimalFormat & updateTrigger:'blur'" data-toggle="tooltip"
-                            data-placement="bottom" title="Override Mission Type Weight">
+                            <input type="number" class="perm-weight-input ${socWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="selectedSeverityOfConsequences.SevOfConWeighting | weight"
+                                data-toggle="tooltip" data-placement="bottom" title="Flight Conditions Weight">
+                            <input type="number" class="${((socWeightOverride != '') && (selectedSeverityOfConsequences.SevOfConWeighting != socWeightOverride)) ? 'override-color': ''} perm-weight-input"
+                                value.bind="socWeightOverride | weight & updateTrigger:'blur'" data-toggle="tooltip" data-placement="bottom"
+                                title="Override Flight Conditions Weight" placeholder="override" blur.trigger="editSeverityOfConsequence()">
+                        </div>
                     </div>
-                    <div class="perm">
-                        <label class="control-label">Mission Role</label>
-                        <select class="form-control" id="missionRole">
-                        <option>Air Movement</option>
-                        <option>Flight</option>
-                        <option>Assault</option>
-                      </select>
-                        <input type="number" class="perm-weight-input ${missionRoleWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="missionRoleWeight | twoDecimalFormat" data-toggle="tooltip"
-                            data-placement="bottom" title="Mission Role Weight">
-                        <input type="number" class="${((missionRoleWeightOverride != '') && (missionRoleWeight != missionRoleWeightOverride)) ? 'override-color': ''} perm-weight-input"
-                            value.bind="missionRoleWeightOverride | twoDecimalFormat & updateTrigger:'blur'" data-toggle="tooltip"
-                            data-placement="bottom" title="Override Mission Role Weight">
-                    </div>
-                    <div class="perm">
-                        <label class="control-label">Flight Conditions</label>
-                        <select class="form-control" id="flightConditions">
-                        <option>Night</option>
-                        <option>Day</option>
-                        <option>Dusk</option>
-                      </select>
-                        <input type="number" class="perm-weight-input ${flightConditionsWeightOverride != '' ? 'overridden-font' : ''}" disabled value.bind="flightConditionsWeight | twoDecimalFormat" data-toggle="tooltip"
-                            data-placement="bottom" title="Flight Conditions Weight">
-                        <input type="number" class="${((flightConditionsWeightOverride != '') && (flightConditionsWeight != flightConditionsWeightOverride)) ? 'override-color': ''} perm-weight-input"
-                            value.bind="flightConditionsWeightOverride | twoDecimalFormat & updateTrigger:'blur'" data-toggle="tooltip"
-                            data-placement="bottom" title="Override Flight Conditions Weight">
-                    </div>
-                    <button id="btn-view-results" class="btn btn-primary">View Results</button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Permutation Scenario Results
-                </div>
-                <div class="panel-body">
-                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default perm-panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            Permutation Scenario Results
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 
-                        <thead>
-                            <tr>
-                                <th>Hazard</th>
-                                <th>Mean Severity</th>
-                                <th>Override Mean Severity</th>
-                                <th>Consequence Weighting</th>
-                                <th>Override Consequence Weighting</th>
-                                <th>Frequency</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr repeat.for="h of hazards">
-                                <td>${h.name}</td>
-                                <td>
-                                    <p class="${h.overrideMeanSeverity != '' ? 'overridden-font' : ''}"> ${h.meanSeverity | twoDecimalFormat}</p>
-                                </td>
-                                <td>
-                                    <input type="number" placeholder="override" class="${((h.overrideMeanSeverity != '') && (h.overrideMeanSeverity != h.meanSeverity)) ? 'override-color': ''}"
-                                        value.bind="h.overrideMeanSeverity | twoDecimalFormat & updateTrigger:'blur'">
-                                </td>
-                                <td>
-                                    <p class="${h.overrideConsequenceWeighting != '' ? 'overridden-font' : ''}"> ${h.consequenceWeighting | twoDecimalFormat}</p>
-                                </td>
-                                <td>
-                                    <input type="number" placeholder="override" class="${((h.overrideConsequenceWeighting != '') && (h.overrideConsequenceWeighting != h.consequenceWeighting)) ? 'override-color': ''}"
-                                        value.bind="h.overrideConsequenceWeighting | twoDecimalFormat & updateTrigger:'blur'">
-                                </td>
-                                <td>${h.frequency | twoDecimalFormat}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="pull-right">
-                        <button class="btn btn-cancel" click.trigger="clearWeights()">Cancel</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>
+                            <thead>
+                                <tr>
+                                    <th>Hazard</th>
+                                    <th>Mean Severity</th>
+                                    <th>Override Mean Severity</th>
+                                    <th>Consequence Weighting</th>
+                                    <th>Override Consequence Weighting</th>
+                                    <th>Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr repeat.for="h of hazardEvents">
+                                    <td>${h.HazardEvent}</td>
+                                    <td>
+                                        <p class="${h.OverrideMeanSeverity != '' ? 'overridden-font' : ''} text-center"> ${h.MeanSeverity | weight} <button click.trigger="selectHazard(h)" data-toggle="modal"
+                                                data-target="#MeanSeverityModal" class="more-info-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></p>
+                                    </td>
+                                    <td>
+                                        <input type="number" placeholder="override" class="${((h.OverrideMeanSeverity != '') && (h.OverrideMeanSeverity != h.MeanSeverity)) ? 'override-color': ''}"
+                                            value.bind="h.OverrideMeanSeverity | weight & updateTrigger:'blur'" blur.trigger="changeWeight(h)">
+                                    </td>
+                                    <td>
+                                        <p class="${h.OverrideConsequenceWeighting != '' ? 'overridden-font' : ''} text-center"> ${h.ConsequenceWeighting | weight}<button click.trigger="selectHazard(h)" data-toggle="modal"
+                                                data-target="#ConsequenceWeightingModal" class="more-info-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></p>
+                                    </td>
+                                    <td>
+                                        <input type="number" placeholder="override" class="${((h.OverrideConsequenceWeighting != '') && (h.OverrideConsequenceWeighting != h.ConsequenceWeighting)) ? 'override-color': ''}"
+                                            value.bind="h.OverrideConsequenceWeighting | weight & updateTrigger:'blur'" blur.trigger="changeWeight(h)">
+                                    </td>
+                                    <td>
+                                        <p class="text-center">${h.Frequency | frequency}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pull-right">
+                            <button class="btn btn-cancel" click.trigger="clearWeights()">Cancel</button>
+                            <button class="btn btn-primary" disabled.bind="!weightingsChanged" data-toggle="modal" data-target="#myModal">Save</button>
+                            <button class="btn btn-primary" click.trigger="runAnalysis()" disabled.bind="!scenarioSaved">Run Analysis</button>
+                        </div>
                     </div>
                 </div>
             </div>

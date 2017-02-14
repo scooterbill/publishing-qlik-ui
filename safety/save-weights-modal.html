@@ -1,22 +1,61 @@
 <template>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <require from="/value-converters/decimal-formats"></require>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirm Changes</h4>
-      </div>
-      <div class="modal-body">
-        <p>Please confirm the changes you would like to make to Hazard and Events weightings</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" click.trigger="saveWeights()">Save Changes</button>
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Changes</h4>
+        </div>
+        <div class="modal-body">
+          <p>Please confirm the changes you would like to make to Hazard and Events weightings</p>
+          <table class="table table-striped">
+            <thead>
+              <th>
+                Hazard
+              </th>
+              <th>
+                Mean Severity
+              </th>
+              <th>
+                Override Mean Severity
+              </th>
+              <th>
+                Consequence Weighting
+              </th>
+              <th>
+                Override Consequence Weighting
+              </th>
+            </thead>
+            <tbody>
+              <tr repeat.for="h of hazardChanges">
+                <td>
+                  ${h.HazardEvent}
+                </td>
+                <td>
+                  <p class="${h.OverrideMeanSeverity != '' ? 'overridden-font' : ''} text-center"> ${h.MeanSeverity | weight}</p>
+                </td>
+                <td>
+                  <p class="${((h.OverrideMeanSeverity != '') && (h.OverrideMeanSeverity != h.MeanSeverity)) ? 'override-color': ''} text-center">${h.OverrideMeanSeverity}</p>
+                </td>
+                <td>
+                  <p class="${h.OverrideConsequenceWeighting != '' ? 'overridden-font' : ''} text-center"> ${h.ConsequenceWeighting | weight}</p>
+                </td>
+                <td>
+                  <p class="${((h.OverrideConsequenceWeighting != '') && (h.OverrideConsequenceWeighting != h.ConsequenceWeighting)) ? 'override-color': ''} text-center">${h.OverrideConsequenceWeighting}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" click.trigger="saveWeights()">Save Changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>

@@ -1,0 +1,13 @@
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/banner.end.js:2:3: Illegal return statement
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/banner.end.js:6:1: Unexpected token }
+
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/banner.start.js:7:1: Unexpected token End of File
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/banner.start.js:7:1: Unexpected token End of File
+
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.end.js:11:3: Illegal return statement
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.end.js:12:1: Unexpected token }
+
+MultipleErrors: C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.start.js:24:1: Unexpected end of input
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.start.js:24:1: Unexpected token End of File
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.start.js:24:1: Unexpected token End of File
+C:/Users/BOB/AppData/Local/.jspm/packages/npm/select2@4.0.3/src/js/wrapper.start.js:24:1: Unexpected token End of File

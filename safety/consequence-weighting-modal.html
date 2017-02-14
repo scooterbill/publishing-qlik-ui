@@ -1,0 +1,37 @@
+<template>
+    <!-- Modal -->
+    <div id="ConsequenceWeightingModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Consequence Weightings</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <th>Hazard</th>
+                            <th>Consequence Weighting</th>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="h of hazardEvents" class="${h.HazardEvent == selectedHazard.HazardEvent ? 'row-highlight' : ''}">
+                                <td>
+                                    ${h.HazardEvent}
+                                </td>
+                                <td>
+                                    ${h.ConsequenceWeighting}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" click.trigger="saveWeights()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

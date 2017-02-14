@@ -21,12 +21,14 @@ System.config({
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "npm:bootstrap@3.3.7",
+    "chosen-npm": "npm:chosen-npm@1.4.2",
     "core-js": "npm:core-js@1.2.7",
     "datatables": "github:DataTables/DataTables@1.10.13",
     "datatables.net": "npm:datatables.net@2.1.1",
     "datatables.net-dt": "npm:datatables.net-dt@2.1.1",
     "jquery": "npm:jquery@3.1.1",
     "numeral": "npm:numeral@2.0.4",
+    "select2": "npm:select2@4.0.3",
     "github:DataTables/DataTables@1.10.13": {
       "css": "github:systemjs/plugin-css@0.1.32",
       "jquery": "npm:jquery@3.1.1"
@@ -213,6 +215,10 @@ System.config({
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
+    },
+    "npm:select2@4.0.3": {
+      "almond": "npm:almond@0.3.3",
+      "jquery-mousewheel": "npm:jquery-mousewheel@3.1.13"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
