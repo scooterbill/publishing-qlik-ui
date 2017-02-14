@@ -4,7 +4,8 @@ export class App {
     this.router = router;
     config.title = "Home";
     config.map([
-      {route: '', name: 'safety', moduleId: 'safety/safety', nav: true, title: 'Safety'}
+      {route: '', name: 'safety', moduleId: 'safety/safety', nav: true, title: 'Safety'},
+      {route: 'register', name: 'register', moduleId: 'registration/register', nav: true, title: 'Register'}
     ]);
   }
 }

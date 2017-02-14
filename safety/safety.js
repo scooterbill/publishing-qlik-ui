@@ -28,6 +28,11 @@ export class safety {
         this.hazardEventService = hazardEventService;
         this.taskQueue = TaskQueue;
 
+        this.initData();
+    }
+
+    initData()
+    {
         this.hazardEvents = this.hazardEventService.getHazardEvents();
         this.SOCWeightings = this.hazardEventService.getSOCWeightings();
         this.MissionRoleWeightings = this.hazardEventService.getMissionRoleWeightings();
@@ -41,21 +46,20 @@ export class safety {
     }
 
     attached() {
-        $('#example').DataTable(
-            {
-                columnDefs: [
-                    { width: 200, targets: 0 },
-                    { width: 50, targets: 1 },
-                    { width: 29, targets: 2 },
-                    { width: 85, targets: 3 },
-                    { width: 140, targets: 4 },
-                    { width: 55, targets: 5 },
-                ]
-            }
-        );
 
         this.taskQueue.queueMicroTask(() => {
-            // $(".select2").select2();
+            this.scenarioTable = $('#scenarioTable').DataTable(
+                {
+                    columnDefs: [
+                        { width: 200, targets: 0 },
+                        { width: 50, targets: 1 },
+                        { width: 29, targets: 2 },
+                        { width: 85, targets: 3 },
+                        { width: 140, targets: 4 },
+                        { width: 55, targets: 5 },
+                    ]
+                }
+            );
         });
     }
 
@@ -109,21 +113,47 @@ export class safety {
         //Find value in SOC array
         var index = $.inArray(this.selectedSeverityOfConsequences, this.SOCWeightings);
 
+
+        var upperLimit = (index == 0 ? 10 : this.SOCWeightings[index - 1].SevOfConWeighting);
+        var lowerLimit = (index == (this.SOCWeightings.length - 1) ? 0 : this.SOCWeightings[index + 1].SevOfConWeighting);
+
+        console.log(upperLimit);
+        console.log(lowerLimit);
+
         //make sure that value is less than higher weight and greater than lower weight
-        if ((this.socWeightOverride > this.SOCWeightings[index - 1].SevOfConWeighting) || (this.socWeightOverride < this.SOCWeightings[index + 1].SevOfConWeighting)) {
+        if ((this.socWeightOverride > upperLimit) || (this.socWeightOverride < lowerLimit)) {
             //If input is invalid, change it to original weight
             this.socWeightOverride = this.SOCWeightings[index].SevOfConWeighting;
+            alertify.error('Error! Weight value is invalid. Weight value has been reset');
         }
     }
 
-    runAnalysis(){
+    runAnalysis() {
         this.scenarioSaved = false;
         this.clearWeights();
     }
 
-    getScenarioResults(mds, missionType, missionRole, flightConditions)
-    {
+    getScenarioResults(mds, missionType, missionRole, flightConditions) {
+        
+        this.loading = true;
         this.hazardEvents = this.hazardEventService.getScenarioResults(mds, missionType, missionRole, flightConditions);
+
+        this.scenarioTable.destroy();
+
+        this.taskQueue.queueMicroTask(() => {
+            this.scenarioTable = $('#scenarioTable').DataTable(
+                {
+                    columnDefs: [
+                        { width: 200, targets: 0 },
+                        { width: 50, targets: 1 },
+                        { width: 29, targets: 2 },
+                        { width: 85, targets: 3 },
+                        { width: 140, targets: 4 },
+                        { width: 55, targets: 5 },
+                    ]
+                }
+            );
+        });
     }
 }
 
