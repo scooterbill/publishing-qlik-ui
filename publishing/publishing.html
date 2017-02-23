@@ -1,0 +1,42 @@
+<template>
+    <div class="navbar navbar-inverse navbar-fixed-left">
+  <div class="navbar-brand">Published</div>
+  <ul class="nav navbar-nav">
+   <li><a href="#" click.trigger="fetchApp(app)">App1</a></li>
+   <li><a href="#">App3</a></li>
+   <li><a href="#">App4</a></li>
+  </ul>
+  <div class="navbar-brand">Unpublished</div>
+  <ul class="nav navbar-nav">
+    <li><a href="#">App2</a></li>
+    <li><a href="#">App5</a></li>
+  </ul>
+</div>
+<div class="container">
+ <div class="row">
+   <h2>Publish Sheets for selectedApp</h2>
+  <form>
+  <div class="form-group">
+    <label for="inputdefault">Report Title</label>
+    <input class="form-control" id="title" type="text">
+  </div>
+  <div class="form-group">
+    <label for="inputlg">Short Description</label>
+    <textarea class="form-control" rows="5" id="shortdescr" type="text"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="inputsm">Long Description</label>
+    <textarea class="form-control" rows="5" id="longdescr" type="text"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="inputdefault">Tags (Comma Delimited List)</label>
+    <input class="form-control" id="title" type="text">
+  </div>
+    <div class="form-group">
+    <label for="inputdefault">Upload an Image</label>
+    <input type="file" accept="image/*" files.bind="selectedFile">
+  </div>
+</form>
+ </div>
+</div>
+</template>
